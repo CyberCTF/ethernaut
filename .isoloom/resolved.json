@@ -1,0 +1,148 @@
+{
+  "generated_by_isoloom": "from isoloom.yml; don't edit: change the spec and run `isoloom generate` (`isoloom check` fails when this file is out of date)",
+  "resolved_version": 1,
+  "name": "ethernaut",
+  "instance": null,
+  "inputs": [],
+  "networks": {
+    "lab": {
+      "cidr": "10.60.200.0/24",
+      "docker_cidr": "10.60.200.0/24",
+      "internet": true,
+      "gateway": null,
+      "gateway_address": "10.60.200.1",
+      "router": null,
+      "controller": "10.60.200.253"
+    }
+  },
+  "reach": [],
+  "machines": {
+    "ethernaut": {
+      "access": false,
+      "supplied": false,
+      "shapes": [
+        "docker"
+      ],
+      "arch": "amd64",
+      "os": null,
+      "windows": false,
+      "addresses": {
+        "lab": "10.60.200.10"
+      },
+      "docker_addresses": {
+        "lab": "10.60.200.10"
+      },
+      "services": [
+        {
+          "port": 3000,
+          "name": "web",
+          "http": true,
+          "publish": 3000
+        },
+        {
+          "port": 8545,
+          "name": "rpc",
+          "http": true,
+          "publish": 8545
+        }
+      ],
+      "depends_on": [],
+      "inputs": [],
+      "volumes": {},
+      "resources": {
+        "cpus": 1,
+        "memory_mb": 1024,
+        "disk_gb": 20
+      },
+      "gateway_of": [],
+      "routes": [],
+      "default_gateway": null,
+      "offline": false
+    }
+  },
+  "start_order": [
+    "ethernaut"
+  ],
+  "clones": {},
+  "tools": {},
+  "groups": {},
+  "router": null,
+  "controller": {
+    "addresses": {
+      "lab": "10.60.200.253"
+    }
+  },
+  "published": [
+    {
+      "machine": "ethernaut",
+      "port": 3000,
+      "host_port": 3000
+    },
+    {
+      "machine": "ethernaut",
+      "port": 8545,
+      "host_port": 8545
+    }
+  ],
+  "targets": {
+    "possible": [
+      "docker",
+      "hosted",
+      "docker-vm",
+      "cloud-docker",
+      "kubernetes"
+    ],
+    "generated": [
+      "docker",
+      "hosted",
+      "docker-vm",
+      "cloud-docker",
+      "kubernetes"
+    ],
+    "refused": {},
+    "not_possible": {
+      "hybrid": "only when some machines are containers and others are VMs",
+      "vagrant": "needs `vm:` on ethernaut",
+      "proxmox": "needs `vm:` on ethernaut",
+      "cloud-vm": "needs `vm:` on ethernaut",
+      "external": "needs `external:` on ethernaut"
+    }
+  },
+  "checks": {
+    "default_position": "networks",
+    "positions": [
+      {
+        "position": "networks",
+        "machine": null,
+        "runner": "isoloom-check",
+        "checks": [
+          {
+            "name": "the game answers",
+            "derived": false,
+            "kind": "http",
+            "target": "http://ethernaut:3000/",
+            "expect": "200",
+            "wait": 120
+          },
+          {
+            "name": "a level page answers",
+            "derived": false,
+            "kind": "http",
+            "target": "http://ethernaut:3000/level/0x0",
+            "expect": "200",
+            "wait": 30
+          },
+          {
+            "name": "checks/chain.sh",
+            "derived": false,
+            "kind": "script",
+            "target": "checks/chain.sh",
+            "expect": "",
+            "wait": 60
+          }
+        ]
+      }
+    ]
+  },
+  "message": "Ethernaut answers at http://localhost:3000/ and its local\nchain at http://localhost:8545 (chain id 31337). In\nMetaMask, add that network (RPC URL as above, chain id 31337, currency ETH) and import this\npublished anvil test key (10000 test ETH, never use it elsewhere):\n0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d\nThen open the browser console and type help(). Start with level 0, Hello Ethernaut.\n"
+}

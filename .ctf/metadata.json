@@ -1,0 +1,9 @@
+{
+  "title": "Ethernaut",
+  "description": "OpenZeppelin's Web3/Solidity wargame, run on a local chain: more than forty levels, each a smart contract to hack from the browser console or with your own contracts, from fallback functions and delegatecall to storage layout, reentrancy and proxies.",
+  "question": "Hack the Ethernaut levels and submit each instance to complete it.",
+  "category": "MISC",
+  "difficulty": 3,
+  "evidence_kind": "SECRET",
+  "capabilities": ["smart-contract-exploitation", "solidity", "evm", "reentrancy", "delegatecall", "web3"]
+}

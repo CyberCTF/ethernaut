@@ -1,0 +1,7 @@
+app/node_modules
+app/client/node_modules
+app/client/build
+app/client/.env
+app/contracts/.env
+app/.env
+app/.netlify

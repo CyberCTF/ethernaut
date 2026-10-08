@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# Ethernaut (by OpenZeppelin): a Web3/Solidity wargame in the browser, each level a smart
+# contract to hack. Run fully locally: a local chain (anvil) holding the game and every level,
+# deployed at image build time by upstream's own deploy script, and the React client built
+# against that deployment. Source: https://github.com/OpenZeppelin/ethernaut, vendored in
+# build/ethernaut/app/. Players need a browser wallet (MetaMask) on the local chain.
+# `isoloom generate`, then `isoloom run docker`.
+version: 1
+name: ethernaut
+
+networks:
+  lab: { cidr: 10.60.200.0/24 }
+
+machines:
+  ethernaut:
+    networks: { lab: 10 }
+    services:
+      - { port: 3000, name: web, http: true, publish: 3000 }
+      - { port: 8545, name: rpc, http: true, publish: 8545 }
+    resources: { cpus: 1, memory_mb: 1024 }
+    docker:
+      build: build/ethernaut
+
+checks:
+  - { name: the game answers, http: "http://ethernaut:3000/", wait: 120 }
+  - { name: a level page answers, http: "http://ethernaut:3000/level/0x0" }
+  - { script: checks/chain.sh, wait: 60 }
+
+message: |
+  Ethernaut answers at http://localhost:{{ machines.ethernaut.services.0.publish }}/ and its local
+  chain at http://localhost:{{ machines.ethernaut.services.1.publish }} (chain id 31337). In
+  MetaMask, add that network (RPC URL as above, chain id 31337, currency ETH) and import this
+  published anvil test key (10000 test ETH, never use it elsewhere):
+  0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
+  Then open the browser console and type help(). Start with level 0, Hello Ethernaut.
