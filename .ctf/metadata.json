@@ -4,6 +4,5 @@
   "question": "Hack the Ethernaut levels and submit each instance to complete it.",
   "category": "MISC",
   "difficulty": 3,
-  "evidence_kind": "SECRET",
-  "capabilities": ["smart-contract-exploitation", "solidity", "evm", "reentrancy", "delegatecall", "web3"]
+  "evidence_kind": "SECRET"
 }
