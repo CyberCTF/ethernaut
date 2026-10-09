@@ -9,6 +9,9 @@ services:
   ethernaut:
     build:
       context: ../../build/ethernaut
+      labels:
+        isoloom.managed: 'true'
+        isoloom.environment: ethernaut
     image: isoloom/ethernaut-ethernaut
     platform: linux/amd64
     hostname: ethernaut
@@ -42,6 +45,8 @@ services:
     labels:
       isoloom.service.web: http:3000
       isoloom.service.rpc: http:8545
+      isoloom.managed: 'true'
+      isoloom.environment: ethernaut
     restart: unless-stopped
   isoloom-check:
     image: curlimages/curl:8.11.1
@@ -58,6 +63,9 @@ services:
     depends_on:
       ethernaut:
         condition: service_healthy
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: ethernaut
   isoloom-probe-amd64:
     image: busybox:1.37.0-musl
     platform: linux/amd64
@@ -69,11 +77,20 @@ services:
     - isoloom-probe-amd64:/probe
     network_mode: none
     restart: no
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: ethernaut
 networks:
   lab:
     ipam:
       config:
       - subnet: 10.60.200.0/24
         gateway: 10.60.200.1
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: ethernaut
 volumes:
-  isoloom-probe-amd64: {}
+  isoloom-probe-amd64:
+    labels:
+      isoloom.managed: 'true'
+      isoloom.environment: ethernaut

@@ -105,7 +105,8 @@
       "vagrant": "needs `vm:` on ethernaut",
       "proxmox": "needs `vm:` on ethernaut",
       "cloud-vm": "needs `vm:` on ethernaut",
-      "external": "needs `external:` on ethernaut"
+      "external": "needs `external:` on ethernaut",
+      "cloud-services": "left out by `targets:`"
     }
   },
   "checks": {
